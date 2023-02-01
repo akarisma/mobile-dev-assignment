@@ -1,8 +1,10 @@
 name: Build App
 on:
-  release:
-    types: [created]
-    
+  pull_request:
+    branches: 
+      - main
+    types: [closed]
+
   workflow_dispatch:
     inputs:
       os:
@@ -26,6 +28,7 @@ on:
           - production
 jobs:
   build:
+    if: ${{ github.event.pull_request.merged || github.event_name == 'workflow_dispatch' }}
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     strategy:
       matrix:
@@ -73,7 +76,12 @@ jobs:
       - name: 👨‍🏭 Rename artifact
         run: cp "./app-build" "./${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk"
 
-      - name: 👍 Release build
+      - name: 🎉 Create release info
+        uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: expo
+          
+      - name: 👍 Attach build artifact to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
