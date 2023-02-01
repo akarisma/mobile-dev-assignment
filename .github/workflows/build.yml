@@ -28,7 +28,7 @@ on:
           - production
 jobs:
   build:
-    if: ${{ github.event.pull_request.merged || github.event_name == 'workflow_dispatch' }}
+    if: ${{ (github.event.pull_request.merged && github.event.pull_request.user.login == 'github-actions[bot]') || github.event_name == 'workflow_dispatch' }}
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     strategy:
       matrix:
