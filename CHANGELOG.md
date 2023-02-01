@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.5.0](https://github.com/akarisma/mobile-dev-assignment/compare/v1.4.0...v1.5.0) (2023-02-01)
+
+
+### Features
+
+* deleted boom ([3027b89](https://github.com/akarisma/mobile-dev-assignment/commit/3027b89144a74415d9d5cade1a53632217fa39f3))
+* new ([2a4d20f](https://github.com/akarisma/mobile-dev-assignment/commit/2a4d20f9b75f034cb9308e29d83a743666ceb15f))
+* new file heheh ([36572e3](https://github.com/akarisma/mobile-dev-assignment/commit/36572e3a84bed88e3ddcdf5cca6987b227a5a2c4))
+
+
+### Bug Fixes
+
+* bug ([1fb2b8e](https://github.com/akarisma/mobile-dev-assignment/commit/1fb2b8e4d4b3e98ebe3db52816d9af5227ee711d))
+
 ## [1.4.0](https://github.com/akarisma/mobile-dev-assignment/compare/v1.3.2...v1.4.0) (2023-02-01)
 
 
