@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.3.0](https://github.com/akarisma/mobile-dev-assignment/compare/v1.2.0...v1.3.0) (2023-02-01)
+
+
+### Features
+
+* first file ([ca65aa5](https://github.com/akarisma/mobile-dev-assignment/commit/ca65aa5bb2eb5f75605b5d0a0e61dcc4152135f9))
+* haha first file ([92a2337](https://github.com/akarisma/mobile-dev-assignment/commit/92a23374021eb75fde14ce257b8f6bc5c6aaa90e))
+
+
+### Bug Fixes
+
+* deleted funny stuff :( ([feced57](https://github.com/akarisma/mobile-dev-assignment/commit/feced573126501de94edec750d1c679400fa28f1))
+* second ([154ddab](https://github.com/akarisma/mobile-dev-assignment/commit/154ddab2c018e027bd5c19545bd7f95e9744a559))
+* third ([4a596a3](https://github.com/akarisma/mobile-dev-assignment/commit/4a596a32c93d676a01b10f9734aa2f8158315379))
+
 ## [1.2.0](https://github.com/akarisma/mobile-dev-assignment/compare/v1.1.3...v1.2.0) (2023-02-01)
 
 
