@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/akarisma/mobile-dev-assignment/compare/v1.0.0...v1.1.0) (2023-02-01)
+
+
+### Features
+
+* something awesome! ([b07cd3b](https://github.com/akarisma/mobile-dev-assignment/commit/b07cd3b2f3a33c820fc244c0c1965f9129d8ff7c))
+
 ## 1.0.0 (2023-02-01)
 
 
