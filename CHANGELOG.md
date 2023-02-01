@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.0](https://github.com/akarisma/mobile-dev-assignment/compare/v1.3.2...v1.4.0) (2023-02-01)
+
+
+### Features
+
+* asyique ([9bbf033](https://github.com/akarisma/mobile-dev-assignment/commit/9bbf0338c7e40f0b4a42b931682608a40b082d51))
+* bb ([81ea75d](https://github.com/akarisma/mobile-dev-assignment/commit/81ea75dbc276feadb7432925391d9730128871e1))
+* bb ([91942f9](https://github.com/akarisma/mobile-dev-assignment/commit/91942f9ac7e38b051366ab57a97f57f77430cd61))
+* cc ([0b26eb9](https://github.com/akarisma/mobile-dev-assignment/commit/0b26eb911e58cbede5cfc3482a803a00956e8d5b))
+
 ## [1.3.2](https://github.com/akarisma/mobile-dev-assignment/compare/v1.3.1...v1.3.2) (2023-02-01)
 
 
