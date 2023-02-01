@@ -73,9 +73,6 @@ jobs:
         with:
           path: ${{ github.workspace }}
 
-      - name: 👨‍🏭 Rename artifact
-        run: cp "./app-build" "./${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk"
-
       - name: 🎉 Create release info
         uses: google-github-actions/release-please-action@v3
         id: releaseplease
@@ -88,8 +85,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: '${{ steps.releaseplease.outputs.upload_url }}'
-          asset_path: './${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk'
-          asset_name: '${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}'
+          asset_path: './app-build'
+          asset_name: '${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk'
           asset_content_type: application/octet-stream
           
       - name: 📱 Upload binary
