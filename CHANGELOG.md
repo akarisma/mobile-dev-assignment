@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.2](https://github.com/akarisma/mobile-dev-assignment/compare/v1.3.1...v1.3.2) (2023-02-01)
+
+
+### Bug Fixes
+
+* unused file lol ([955d6a2](https://github.com/akarisma/mobile-dev-assignment/commit/955d6a2f391dd9b94cb4eb1b6f4dcb47fc0fca92))
+* unused file lol ([159142f](https://github.com/akarisma/mobile-dev-assignment/commit/159142f439f9702dfdf6adb8062be9a68249c4b3))
+
 ## [1.3.1](https://github.com/akarisma/mobile-dev-assignment/compare/v1.3.0...v1.3.1) (2023-02-01)
 
 
