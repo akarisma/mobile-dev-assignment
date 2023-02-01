@@ -54,6 +54,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: Dump steps context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(steps) }}
+        run: echo "$GITHUB_CONTEXT"
           
   packageinfo:
     runs-on: 'ubuntu-latest'
@@ -72,6 +76,10 @@ jobs:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump steps context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(steps) }}
         run: echo "$GITHUB_CONTEXT"
           
   build:
