@@ -1,8 +1,10 @@
 name: Build App
 on:
-  push:
-    branches:
-      - 'main'
+  pull_request:
+    branches: 
+      - main
+    types: [closed]
+    
   workflow_dispatch:
     inputs:
       os:
@@ -26,11 +28,16 @@ on:
           - production
 jobs:
   build:
+    if: ${{ github.event.pull_request.merged || github.event.workflow_run.requested }}
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     strategy:
       matrix:
         node: [16.x]
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: 🏗 Setup repo
         uses: actions/checkout@v2
 
