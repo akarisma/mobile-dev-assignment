@@ -26,10 +26,55 @@ on:
           - development
           - preview
           - production
+          
 jobs:
+  githubcontext:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        
+  release:
+    runs-on: 'ubuntu-latest'
+    outputs:
+      upload_url: ${{ steps.releaseplease.outputs.upload_url }}
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v2
+      - name: 🎉 Create release info
+        uses: google-github-actions/release-please-action@v3
+        id: releaseplease
+        with:
+          release-type: expo
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+          
+  packageinfo:
+    runs-on: 'ubuntu-latest'
+    outputs:
+      name: ${{ steps.package.outputs.name }}
+      version: ${{ steps.package.outputs.version }}
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v2
+      - name: 📦 Get package info
+        id: package
+        uses: codex-team/action-nodejs-package-info@v1.1
+        with:
+          path: ${{ github.workspace }}
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+          
   build:
     if: ${{ (github.event.pull_request.merged && github.event.pull_request.user.login == 'github-actions[bot]') || github.event_name == 'workflow_dispatch' }}
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
+    needs: [release, packageinfo]
     strategy:
       matrix:
         node: [16.x]
@@ -38,6 +83,7 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+        
       - name: 🏗 Setup repo
         uses: actions/checkout@v2
 
@@ -67,26 +113,15 @@ jobs:
             --output=./app-build \
             --platform=${{ github.event.inputs.platform || 'android' }} \
             --profile=${{ github.event.inputs.profile || 'preview' }}
-      - name: 📦 Get package info
-        id: package
-        uses: codex-team/action-nodejs-package-info@v1.1
-        with:
-          path: ${{ github.workspace }}
 
-      - name: 🎉 Create release info
-        uses: google-github-actions/release-please-action@v3
-        id: releaseplease
-        with:
-          release-type: expo
-          
       - name: 👍 Attach build artifact to release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: '${{ steps.releaseplease.outputs.upload_url }}'
+          upload_url: '${{ needs.release.outputs.upload_url }}'
           asset_path: './app-build'
-          asset_name: '${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk'
+          asset_name: '${{ needs.packageinfo.outputs.name }}-${{ needs.packageinfo.outputs.version }}.apk'
           asset_content_type: application/octet-stream
           
       - name: 📱 Upload binary
