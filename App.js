@@ -50,7 +50,7 @@ function Container() {
     </SafeAreaProvider>
   );
 }
-
+// test
 export default function App() {
   return (
     <StoreProvider store={store}>
