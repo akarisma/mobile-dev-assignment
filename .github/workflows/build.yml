@@ -28,7 +28,8 @@ on:
           - production
           
 jobs:
-  githubcontext:
+  requirement:
+    if: ${{ (github.event.pull_request.merged && github.event.pull_request.user.login == 'github-actions[bot]') || github.event_name == 'workflow_dispatch' }}
     runs-on: 'ubuntu-latest'
     steps:
       - name: Dump GitHub context
@@ -38,6 +39,7 @@ jobs:
         
   release:
     runs-on: 'ubuntu-latest'
+    needs: requirement
     outputs:
       upload_url: ${{ steps.releaseplease.outputs.upload_url }}
     steps:
@@ -55,6 +57,7 @@ jobs:
           
   packageinfo:
     runs-on: 'ubuntu-latest'
+    needs: requirement
     outputs:
       name: ${{ steps.package.outputs.name }}
       version: ${{ steps.package.outputs.version }}
@@ -72,9 +75,8 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
           
   build:
-    if: ${{ (github.event.pull_request.merged && github.event.pull_request.user.login == 'github-actions[bot]') || github.event_name == 'workflow_dispatch' }}
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
-    needs: [release, packageinfo]
+    needs: [requirement, release, packageinfo]
     strategy:
       matrix:
         node: [16.x]
