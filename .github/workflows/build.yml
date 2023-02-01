@@ -1,9 +1,7 @@
 name: Build App
 on:
-  pull_request:
-    branches: 
-      - main
-    types: [closed]
+  release:
+    types: [created]
     
   workflow_dispatch:
     inputs:
@@ -28,7 +26,6 @@ on:
           - production
 jobs:
   build:
-    if: ${{ github.event.pull_request.merged || github.event_name == 'workflow_dispatch' }}
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     strategy:
       matrix:
@@ -77,14 +74,15 @@ jobs:
         run: cp "./app-build" "./${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk"
 
       - name: 👍 Release build
-        uses: 'marvinpinto/action-automatic-releases@latest'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: '${{ secrets.GITHUB_TOKEN }}'
-          automatic_release_tag: 'latest'
-          prerelease: true
-          title: 'Build'
-          files: './${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk'
-
+          upload_url: ${{ github.event.release.upload_url }} 
+          asset_path: './${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}.apk'
+          asset_name: '${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}'
+          asset_content_type: application/octet-stream
+          
       - name: 📱 Upload binary
         uses: actions/upload-artifact@v2
         with:
