@@ -85,6 +85,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: Dump needs
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(needs) }}
+        run: echo "$GITHUB_CONTEXT"
         
       - name: 🏗 Setup repo
         uses: actions/checkout@v2
