@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.2.0](https://github.com/akarisma/mobile-dev-assignment/compare/v1.1.3...v1.2.0) (2023-02-01)
+
+
+### Features
+
+* add some funny stuff ([41737de](https://github.com/akarisma/mobile-dev-assignment/commit/41737deff7bec4e2320bb3fd77103975d1f4a907))
+* add some funny stuff ([912ebda](https://github.com/akarisma/mobile-dev-assignment/commit/912ebda28276925682f80bdbea46ca81b0eb1969))
+* readding build workflow ([4027816](https://github.com/akarisma/mobile-dev-assignment/commit/402781631e9f61ba4916808166522034b29e8624))
+* wow ([1b567d6](https://github.com/akarisma/mobile-dev-assignment/commit/1b567d634708c68f5a64ff827decdc01c7ef98ed))
+* wow ([b4577c7](https://github.com/akarisma/mobile-dev-assignment/commit/b4577c7b7f1370b4c3dbbf1183d5212f29bf4019))
+
+
+### Bug Fixes
+
+* deleted test ([4cc2990](https://github.com/akarisma/mobile-dev-assignment/commit/4cc2990f91de417879884e10d50be284915be740))
+* deleted test ([68bb6af](https://github.com/akarisma/mobile-dev-assignment/commit/68bb6af2154b7a39f346f40bea1edda9d31163ac))
+* hehe deleted ([c81a657](https://github.com/akarisma/mobile-dev-assignment/commit/c81a6572d28aec8134ccfe660bf94a35136c2900))
+* only build pr by github-actions ([163f8f7](https://github.com/akarisma/mobile-dev-assignment/commit/163f8f7ba51d4780e0370d9a5344df7967c22cb3))
+
 ## [1.1.3](https://github.com/akarisma/mobile-dev-assignment/compare/v1.1.2...v1.1.3) (2023-02-01)
 
 
