@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.3](https://github.com/akarisma/mobile-dev-assignment/compare/v1.1.2...v1.1.3) (2023-02-01)
+
+
+### Bug Fixes
+
+* build test hehe ([7cc74f5](https://github.com/akarisma/mobile-dev-assignment/commit/7cc74f53e840f6fd33ffb63899ae7864abf277c1))
+* it's a bug afterall.. ([d3b85c0](https://github.com/akarisma/mobile-dev-assignment/commit/d3b85c08bd9f0b3aeb83d870db2630ff72bbbd52))
+* it's a bug afterall.. ([3158f45](https://github.com/akarisma/mobile-dev-assignment/commit/3158f453584e4ea7b0a83cedea592383433cf1a3))
+
 ## [1.1.2](https://github.com/akarisma/mobile-dev-assignment/compare/v1.1.1...v1.1.2) (2023-02-01)
 
 
