@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/akarisma/mobile-dev-assignment/compare/v1.0.1...v1.0.2) (2023-02-02)
+
+
+### Bug Fixes
+
+* some char ([da4088e](https://github.com/akarisma/mobile-dev-assignment/commit/da4088e82060335dd33cac7c6830dbbe8c62dde7))
+
 ## [1.0.1](https://github.com/akarisma/mobile-dev-assignment/compare/v1.0.0...v1.0.1) (2023-02-02)
 
 
