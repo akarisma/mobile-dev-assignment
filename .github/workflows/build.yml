@@ -121,9 +121,10 @@ jobs:
         run: yarn
 
       - name: 📱 Upload build environment for next stage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: prebuild
+          path: ./
           
   build:
     if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -156,7 +157,7 @@ jobs:
             --profile=production
             
       - name: 📱 Upload build environment for next stage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: '${{ needs.packageinfo.outputs.name }}-${{ needs.packageinfo.outputs.version }}'
           path: app-build
