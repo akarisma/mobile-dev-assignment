@@ -82,7 +82,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(steps) }}
         run: echo "$GITHUB_CONTEXT"
 
-  build:
+  prebuild:
     runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
     needs: [requirement, release, packageinfo]
     strategy:
@@ -120,19 +120,77 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn
 
+      - name: 📱 Upload build environment for next stage
+        uses: actions/upload-artifact@v2
+        with:
+          name: prebuild
+          
+  build:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
+    needs: [requirement, release, packageinfo, prebuild]
+    strategy:
+      matrix:
+        node: [16.x]
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump needs
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(needs) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: 📱 Download build environment
+        uses: actions/download-artifact@v3
+        with:
+          name: prebuild
+          
       - name: 👷 Build app
         run: |
           eas build --local \
             --non-interactive \
             --output=./app-build \
             --platform=${{ github.event.inputs.platform || 'android' }} \
-            --profile=${{ github.event.inputs.profile || 'preview' }}
-
-      - name: 📱 Upload binary
+            --profile=production
+            
+      - name: 📱 Upload build environment for next stage
         uses: actions/upload-artifact@v2
         with:
-          name: '${{ needs.packageinfo.outputs.name }}-${{ needs.packageinfo.outputs.version }}.apk'
+          name: '${{ needs.packageinfo.outputs.name }}-${{ needs.packageinfo.outputs.version }}'
           path: app-build
+
+
+  buildprod:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
+    needs: [requirement, release, packageinfo, prebuild]
+    strategy:
+      matrix:
+        node: [16.x]
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump needs
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(needs) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: 📱 Download build environment
+        uses: actions/download-artifact@v3
+        with:
+          name: prebuild
+          
+      - name: 👷 Build app
+        run: |
+          eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=${{ github.event.inputs.platform || 'android' }} \
+            --profile=production
 
       - name: 👍 Attach build artifact to release
         if: ${{ needs.release.outputs.upload_url }}
@@ -143,4 +201,86 @@ jobs:
           upload_url: '${{ needs.release.outputs.upload_url }}'
           asset_path: './app-build'
           asset_name: '${{ needs.packageinfo.outputs.name }}-${{ needs.packageinfo.outputs.version }}.apk'
+          asset_content_type: application/octet-stream
+
+  buildprev:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
+    needs: [requirement, release, packageinfo, prebuild]
+    strategy:
+      matrix:
+        node: [16.x]
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump needs
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(needs) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: 📱 Download build environment
+        uses: actions/download-artifact@v3
+        with:
+          name: prebuild
+          
+      - name: 👷 Build app
+        run: |
+          eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=${{ github.event.inputs.platform || 'android' }} \
+            --profile=preview
+
+      - name: 👍 Attach build artifact to release
+        if: ${{ needs.release.outputs.upload_url }}
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: '${{ needs.release.outputs.upload_url }}'
+          asset_path: './app-build'
+          asset_name: '${{ needs.packageinfo.outputs.name }}-preview-${{ needs.packageinfo.outputs.version }}.apk'
+          asset_content_type: application/octet-stream
+
+  builddev:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ${{ github.event.inputs.os || 'ubuntu-latest' }}
+    needs: [requirement, release, packageinfo, prebuild]
+    strategy:
+      matrix:
+        node: [16.x]
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump needs
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(needs) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: 📱 Download build environment
+        uses: actions/download-artifact@v3
+        with:
+          name: prebuild
+          
+      - name: 👷 Build app
+        run: |
+          eas build --local \
+            --non-interactive \
+            --output=./app-build \
+            --platform=${{ github.event.inputs.platform || 'android' }} \
+            --profile=development
+
+      - name: 👍 Attach build artifact to release
+        if: ${{ needs.release.outputs.upload_url }}
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: '${{ needs.release.outputs.upload_url }}'
+          asset_path: './app-build'
+          asset_name: '${{ needs.packageinfo.outputs.name }}-dev-${{ needs.packageinfo.outputs.version }}.apk'
           asset_content_type: application/octet-stream
